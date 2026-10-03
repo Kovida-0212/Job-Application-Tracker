@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Edit Application · JobTrack{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="page-heading">
+        <div>
+            <div class="eyebrow">UPDATE RECORD</div>
+            <h1>Edit Application</h1>
+            <p>Update your application details and current status.</p>
+        </div>
+    </div>
+
+    <div class="panel-card form-card">
+        <form method="POST">
+            <div class="section-title"><i class="bi bi-building"></i> Job Details</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Company <span>*</span></label>
+                    <input type="text" name="company" class="form-control" value="{{ application['company'] }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Job Role <span>*</span></label>
+                    <input type="text" name="role" class="form-control" value="{{ application['role'] }}" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Application Date <span>*</span></label>
+                    <input type="date" name="application_date" class="form-control" value="{{ application['application_date'] }}" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select">
+                        {% for status in statuses %}
+                        <option value="{{ status }}" {% if application['status'] == status %}selected{% endif %}>{{ status }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Interview Date</label>
+                    <input type="date" name="interview_date" class="form-control" value="{{ application['interview_date'] or '' }}">
+                </div>
+            </div>
+
+            <div class="section-title mt-4"><i class="bi bi-file-earmark-text"></i> Application Notes</div>
+            <div class="row g-3">
+                <div class="col-md-5">
+                    <label class="form-label">Resume Version</label>
+                    <input type="text" name="resume_version" class="form-control" value="{{ application['resume_version'] or '' }}">
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Notes</label>
+                    <textarea name="notes" class="form-control" rows="5">{{ application['notes'] or '' }}</textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('view_application', application_id=application['id']) }}" class="btn btn-light-custom">Cancel</a>
+                <button type="submit" class="btn btn-add"><i class="bi bi-check-lg me-1"></i> Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

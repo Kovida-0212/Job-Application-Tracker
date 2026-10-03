@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · JobTrack{% endblock %}
+
+{% block content %}
+<div class="hero-section mb-4">
+    <div>
+        <div class="eyebrow">JOB SEARCH COMMAND CENTER</div>
+        <h1>Track your applications. <span>Stay organized.</span></h1>
+        <p>Keep every opportunity, interview, and application status in one place.</p>
+    </div>
+    <a href="{{ url_for('add_application') }}" class="btn btn-add btn-lg">
+        <i class="bi bi-plus-lg me-1"></i> New Application
+    </a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-lg">
+        <div class="stat-card stat-total">
+            <div class="stat-icon"><i class="bi bi-briefcase-fill"></i></div>
+            <div><div class="stat-number">{{ total }}</div><div class="stat-label">Total</div></div>
+        </div>
+    </div>
+    {% for status in statuses %}
+    <div class="col-6 col-lg">
+        <div class="stat-card">
+            <div class="stat-icon status-{{ status|lower }}"><i class="bi
+                {% if status == 'Applied' %}bi-send-fill
+                {% elif status == 'Assessment' %}bi-pencil-square
+                {% elif status == 'Interview' %}bi-people-fill
+                {% elif status == 'Selected' %}bi-trophy-fill
+                {% else %}bi-x-circle-fill{% endif %}"></i></div>
+            <div><div class="stat-number">{{ counts[status] }}</div><div class="stat-label">{{ status }}</div></div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="panel-card">
+            <div class="panel-header">
+                <div>
+                    <h4>Recent Applications</h4>
+                    <p>Your latest job applications</p>
+                </div>
+                <a href="{{ url_for('applications') }}" class="view-link">View all <i class="bi bi-arrow-right"></i></a>
+            </div>
+
+            {% if recent %}
+            <div class="table-responsive">
+                <table class="table app-table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Role</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for app in recent %}
+                        <tr>
+                            <td>
+                                <a class="company-link" href="{{ url_for('view_application', application_id=app['id']) }}">
+                                    {{ app['company'] }}
+                                </a>
+                            </td>
+                            <td>{{ app['role'] }}</td>
+                            <td>{{ app['application_date'] }}</td>
+                            <td><span class="status-badge status-{{ app['status']|lower }}">{{ app['status'] }}</span></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-folder2-open"></i>
+                    <h5>No applications yet</h5>
+                    <p>Start tracking your job search by adding your first application.</p>
+                    <a href="{{ url_for('add_application') }}" class="btn btn-add">Add Application</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="panel-card">
+            <div class="panel-header">
+                <div>
+                    <h4>Application Flow</h4>
+                    <p>Current pipeline</p>
+                </div>
+            </div>
+            <div class="pipeline">
+                {% for status in statuses %}
+                <div class="pipeline-row">
+                    <div class="pipeline-label">
+                        <span class="dot status-{{ status|lower }}"></span>{{ status }}
+                    </div>
+                    <strong>{{ counts[status] }}</strong>
+                </div>
+                {% endfor %}
+            </div>
+            <a href="{{ url_for('applications') }}" class="btn btn-outline-custom w-100 mt-3">
+                Manage Applications
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

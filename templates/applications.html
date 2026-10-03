@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Applications · JobTrack{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <div>
+        <div class="eyebrow">YOUR JOB SEARCH</div>
+        <h1>Applications</h1>
+        <p>Search, filter and manage your applications.</p>
+    </div>
+    <a href="{{ url_for('add_application') }}" class="btn btn-add">
+        <i class="bi bi-plus-lg me-1"></i> Add Application
+    </a>
+</div>
+
+<div class="panel-card mb-4">
+    <form method="GET" class="row g-2">
+        <div class="col-lg-7">
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" name="search" class="form-control" value="{{ search }}"
+                       placeholder="Search company, role or notes...">
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <select name="status" class="form-select">
+                <option value="">All statuses</option>
+                {% for s in statuses %}
+                <option value="{{ s }}" {% if selected_status == s %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-lg-2 d-grid">
+            <button class="btn btn-filter" type="submit"><i class="bi bi-funnel me-1"></i> Filter</button>
+        </div>
+    </form>
+</div>
+
+<div class="panel-card">
+    <div class="panel-header">
+        <div>
+            <h4>All Applications</h4>
+            <p>{{ applications|length }} application{% if applications|length != 1 %}s{% endif %} found</p>
+        </div>
+    </div>
+
+    {% if applications %}
+    <div class="table-responsive">
+        <table class="table app-table align-middle">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Applied</th>
+                    <th>Status</th>
+                    <th>Interview</th>
+                    <th>Resume</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for app in applications %}
+                <tr>
+                    <td><a class="company-link" href="{{ url_for('view_application', application_id=app['id']) }}">{{ app['company'] }}</a></td>
+                    <td>{{ app['role'] }}</td>
+                    <td>{{ app['application_date'] }}</td>
+                    <td><span class="status-badge status-{{ app['status']|lower }}">{{ app['status'] }}</span></td>
+                    <td>{{ app['interview_date'] or '—' }}</td>
+                    <td>{{ app['resume_version'] or '—' }}</td>
+                    <td class="text-end">
+                        <a href="{{ url_for('view_application', application_id=app['id']) }}" class="action-btn" title="View"><i class="bi bi-eye"></i></a>
+                        <a href="{{ url_for('edit_application', application_id=app['id']) }}" class="action-btn" title="Edit"><i class="bi bi-pencil"></i></a>
+                        <form method="POST" action="{{ url_for('delete_application', application_id=app['id']) }}" class="d-inline" onsubmit="return confirmDelete();">
+                            <button class="action-btn danger" title="Delete" type="submit"><i class="bi bi-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-search"></i>
+        <h5>No matching applications</h5>
+        <p>Try changing your search or filter.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
