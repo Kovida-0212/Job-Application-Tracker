@@ -1,91 +1,57 @@
-# Job Application Tracker
+# 💼 Job Application Tracker
 
-A modern Flask + SQLite application for tracking job applications.
+A modern web application for managing and tracking job applications in one place.
 
-## Features
+## ✨ Features
 
-- Add job applications
+- Add and manage job applications
 - Track company and job role
-- Application date
-- Status: Applied / Assessment / Interview / Selected / Rejected
-- Interview date
-- Resume version
-- Notes
+- Record application and interview dates
+- Track application status
+- Store resume version used for each application
+- Add notes and follow-up details
 - Search applications
-- Filter by status
+- Filter applications by status
 - Edit and delete applications
-- Dashboard statistics
-- Responsive Bootstrap UI
-- No API keys required
+- Dashboard with application statistics
+- Responsive and modern user interface
 - SQLite database
+- No API keys required
 
-## 1. Open the project
+## 🛠️ Technologies Used
 
-Open this folder in VS Code.
+- Python
+- Flask
+- SQLite
+- HTML5
+- CSS3
+- Bootstrap 5
+- JavaScript
 
-## 2. Create a virtual environment (recommended)
+## 🎯 Project Highlights
 
-Windows:
+This project demonstrates practical implementation of:
 
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
+- Flask web development
+- CRUD operations
+- SQL database integration
+- Form handling and validation
+- Search and filtering
+- Dashboard development
+- Responsive frontend design
 
-If PowerShell blocks activation, you can simply use:
+## 🔮 Future Enhancements
 
-```bash
-venv\Scripts\python.exe -m pip install -r requirements.txt
-```
+- User authentication
+- Application reminders
+- Resume file uploads
+- Job description storage
+- Advanced analytics
+- Email notifications
+- Online deployment
 
-## 3. Install dependencies
+## 👩‍💻 Author
 
-```bash
-pip install -r requirements.txt
-```
+**Kovida Munnangi**
 
-## 4. Run the app
-
-```bash
-python app.py
-```
-
-You should see Flask start locally.
-
-Open the browser at:
-
-http://127.0.0.1:5000
-
-## Database
-
-SQLite is built into Python. The `job_tracker.db` file is automatically created the first time you run the application.
-
-## Stop the server
-
-Press:
-
-```text
-CTRL + C
-```
-
-## Project structure
-
-```text
-Job-Application-Tracker/
-├── app.py
-├── requirements.txt
-├── README.md
-├── job_tracker.db
-├── templates/
-│   ├── base.html
-│   ├── dashboard.html
-│   ├── applications.html
-│   ├── add_application.html
-│   ├── edit_application.html
-│   └── view_application.html
-└── static/
-    ├── css/
-    │   └── style.css
-    └── js/
-        └── script.js
-```
+B.Sc. Computer Science Graduate
